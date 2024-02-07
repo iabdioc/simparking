@@ -2,19 +2,18 @@
 @ IOC - Joan Quintana - 2024 - CE IABD
 '''
 
-from utils.customformatter import CustomFormatter
-
-from datetime import datetime
 import sys
+
 import itertools
 import logging
-import pandas as pd
-from sklearn import preprocessing
+from datetime import datetime
 import matplotlib.pyplot as plt
 import seaborn as sns
+import pandas as pd
 
 sys.path.append("..")
 from simulaciodades.simulaciodades import generar_caps_de_setmana, generar_diumenges, generar_feiners, generar_dies_tots, generar_dades_tipus
+from utils.customformatter import CustomFormatter
 
 logger = logging.getLogger("generarinforme")
 logger.setLevel(logging.DEBUG)
@@ -24,7 +23,16 @@ ch.setFormatter(CustomFormatter())
 logger.addHandler(ch)
 
 def creacio_array_cotxes(dicc_, matricules_):
+	"""
+	Creació de l'array de cotxes a partir de les proporcions que hi ha al diccionari i les matrícules
 
+	arguments:
+		dicc_ -- diccionari (ens interessa les proporcions de cada tipus)
+		matricules -- el fitxer matricules.txt
+
+	Returns:
+		array de cotxes
+	"""
 	cotxes = [[], [], [], []] # tipus I, II, III i IV
 	count = 0
 
@@ -45,16 +53,38 @@ def creacio_array_cotxes(dicc_, matricules_):
 	return cotxes
 
 def generacio_dades(c, dicc_, dies_):
+	"""
+	Genera les dades de simulació a partir de l'array de cotxes, el diccionari de paràmetres, i els dies de la simulació)
+	Crida a generar_dades_tipus()
+
+	arguments:
+		c -- array de cotxes
+		dicc_ -- paràmetres de la simulació
+		dies_ -- dies que compleixen les restriccions del tipus
+
+	Returns:
+		array de simulació
+	"""
+
 	logger.debug(dicc_)
 	arr_cotxes = []
-	for i in range(len(c)):
-		arr_cotxes.append(generar_dades_tipus(c[i], dicc_[i], dies_[i])[1])
+	for cot in enumerate(c):
+		arr_cotxes.append(generar_dades_tipus(cot[1], dicc_[cot[0]], dies_[cot[0]])[1])
 
 	# fem el flatten, i ordenem per les dates
 	arr_cotxes = list(itertools.chain.from_iterable(arr_cotxes)) # amb un array de numpy això es fa amb flatten()
 	return arr_cotxes
 
 def creacio_objecte_simulacio():
+	"""
+	Creació de l'array dels diccionaris de simulació.
+	Variem paràmetres i obtenim 3x3x3=27 diccionaris
+
+	arguments:
+
+	Returns:
+		array de diccionaris
+	"""
 
 	dicc = []
 
@@ -75,47 +105,86 @@ def creacio_objecte_simulacio():
 			# tipus IV: varia entre un rang de 12 h (es reparteix més tot el dia), 9h o 6h (no hi ha tant marge)
 			for sigma in [[1.5, 12], [1.0, 9], [0.5, 6]]:
 				dicctemp = [
-					{"name":"tipus I", "proporcio":round((1.-prop)/3,2), "perc": [perc[0], perc[1]], "mu_t": 21, "s_t": sigma[0], "mu_d": 3, "s_d": sigma[0]},
-					{"name":"tipus II", "proporcio":round((1.-prop)/3,2), "perc": [perc[0], perc[1]], "mu_t": 11, "s_t": sigma[0], "mu_d": 3, "s_d": sigma[0]},
-					{"name":"tipus III", "proporcio":round((1.-prop)/3,2), "perc": [perc[0], perc[1]], "mu_t": 9, "s_t": sigma[0], "mu_d": 6, "s_d": sigma[0]},
-					{"name":"tipus IV", "proporcio":prop, "perc": [1, 3], "mu_t": 12, "s_t": sigma[1], "mu_d": 2, "s_d": 1}
+					{"name": "tipus I", "proporcio": round((1.-prop)/3, 2), "perc": [perc[0], perc[1]], "mu_t": 21, "s_t": sigma[0], "mu_d": 3, "s_d": sigma[0]},
+					{"name": "tipus II", "proporcio": round((1.-prop)/3, 2), "perc": [perc[0], perc[1]], "mu_t": 11, "s_t": sigma[0], "mu_d": 3, "s_d": sigma[0]},
+					{"name": "tipus III", "proporcio": round((1.-prop)/3, 2), "perc": [perc[0], perc[1]], "mu_t": 9, "s_t": sigma[0], "mu_d": 6, "s_d": sigma[0]},
+					{"name": "tipus IV", "proporcio":prop, "perc": [1, 3], "mu_t": 12, "s_t": sigma[1], "mu_d": 2, "s_d": 1}
 				]
 				dicc.append(dicctemp)
 
 	return dicc
 
 def tractament_dades(lst_parking_data):
-	#['9566 JVI', 6461, 1.5]
-	# matrícula, durada, dia_setmana_decimal
-	# dia_setmana_decimal: 0 (dilluns), 6 (diumenge), 0.9 significa dilluns a la nit
+	"""
+	Convertim a dataframe de Pandas, agrupem per matrícula, calculem el count del groupby, i afegim el count com a columna.
+
+	arguments:
+		lst_parking_data (list) -- llista de dades simulades
+
+	Returns:
+		dataframe amb les matrícules agrupades
+	"""
 	logger.debug(lst_parking_data[20])
 
-	parking_data = pd.DataFrame(lst_parking_data, columns =['matricula', 'durada', 'hora', 'dia_setmana_dec']) 
+	parking_data = pd.DataFrame(lst_parking_data, columns=['matricula', 'durada', 'hora', 'dia_setmana_dec'])
 
 	parking_data_gb = parking_data.groupby(['matricula']).mean()
 	parking_data_gb = parking_data_gb.merge(parking_data.groupby(['matricula']).count()['durada'], how='inner', on='matricula')
 	parking_data_gb = parking_data_gb.rename(columns={'durada_x': 'durada', 'durada_y': 'count'})
 	logger.debug(parking_data_gb)
 
-	# Normalització de les dades
-	scaler = preprocessing.StandardScaler().fit(parking_data_gb)
-	parking_data_gb_norm = pd.DataFrame(scaler.transform(parking_data_gb), index=parking_data_gb.index, columns=parking_data_gb.columns)
-	logger.debug(parking_data_gb_norm[:3])
-	#return parking_data_gb_norm
 	return parking_data_gb
 
-def generar_imatges(dades_norm_, sim_):
+def generar_imatges(dades_, sim_):
+	"""
+	Generació de les imatges de totes les simulacions. Utilitza la llibreria Seaborn
+
+	arguments:
+		dades_ (dataframe) -- dataframe de dades simulades
+
+	Returns:
+		None
+	"""
 	logger.debug(sim_[1])
-	titol = 'prop123: {:.1f}%'.format(sim_[1][0]['proporcio']*100)
-	titol += '\nprop4: {:.1f}%'.format(sim_[1][3]['proporcio']*100)
+	titol = 'prop123: {:.2f}%'.format(sim_[1][0]['proporcio']*100)
+	titol += '\nprop4: {:.2f}%'.format(sim_[1][3]['proporcio']*100)
 	titol += '\nperc123: {:d}-{:d}%'.format(sim_[1][0]['perc'][0], sim_[1][0]['perc'][1])
 	titol += '\nperc4: {:d}-{:d}%'.format(sim_[1][3]['perc'][0], sim_[1][3]['perc'][1])
 	titol += '\nsigma123: {:.1f}\nsigma4: {:.1f}'.format(sim_[1][0]['s_t'], sim_[1][3]['s_t'])
-	sns.pairplot(dades_norm_)
+	sns.pairplot(dades_)
 	plt.suptitle(titol, x=0.1, ha='left')
 	plt.savefig('img/' + str(sim_[0]) + '.png')
 	#plt.show()
 	plt.close()
+
+def generar_informe_html(num):
+	"""
+	Generació de l'informe html
+
+	arguments:
+		num (int) - número d'imatges que conté l'informe
+
+	Returns:
+		None
+	"""
+	logger.info("Creem el informe.html")
+	with open("informe/informe.html", "w") as f:
+		f.write('<html>\n')
+		f.write('<head><title>Informe simulació Parking</title></head>\n')
+		f.write('<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">\n')
+		f.write('<body>\n')
+		f.write('\t<div style="background-color: #aaaaaa;padding: 20px;">\n')
+		f.write('\t\t<h1 style="font-family:Montserrat">Informe simulació Parking</h1>\n')
+		f.write('\t</div>\n')
+
+		for i in range(num):
+			f.write('\t<div style="background-color: #cccccc;padding: 20px;">\n')
+			f.write('\t\t<p style="font-family:Montserrat">{}.png</p>\n'.format(i))
+			f.write('\t\t<img src="../img/{}.png" />\n'.format(i))
+			f.write('\t</div>\n')
+
+		f.write('</body>\n')
+		f.write('<html>')
 
 if __name__ == "__main__":
 
@@ -134,16 +203,16 @@ if __name__ == "__main__":
 	f.close()
 
 	dicc_simulacio = creacio_objecte_simulacio() # array d'array de diccionaris
-	
 	# recorrem tots els diccionaris de simulació
 	for sim in enumerate(dicc_simulacio):
-		logger.info("SIMULACIO " + str(sim[0]))
+		logger.info("SIMULACIO #%s", sim[0])
 		cotxes = creacio_array_cotxes(sim[1], matricules)
 		dades = generacio_dades(cotxes, sim[1], dies)
-		dades_norm = tractament_dades(dades)
-		generar_imatges(dades_norm, sim)
+		dades = tractament_dades(dades)
+		generar_imatges(dades, sim)
 
 		#if sim[0] == 0:
 		#	break
+	generar_informe_html(len(dicc_simulacio))
 
 	logger.info("FINAL")

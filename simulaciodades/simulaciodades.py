@@ -16,7 +16,7 @@ from PIL import Image, ImageDraw, ImageFont, ImageFilter
 logger = logging.getLogger("simulaciodades")
 logger.setLevel(logging.DEBUG)
 ch = logging.StreamHandler()
-ch.setLevel(logging.DEBUG) # canviar a DEBUG mentre es programa
+ch.setLevel(logging.WARNING) # canviar a DEBUG mentre es programa
 ch.setFormatter(CustomFormatter())
 logger.addHandler(ch)
 
