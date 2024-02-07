@@ -282,8 +282,8 @@ if __name__ == "__main__":
 	np.random.seed(10)
 
 	str_matricules = 'data/matricules.txt'
-	#generar_matricules(1000) # 1000 matrícules (cotxes)
-	#generar_matricules_png(str_matricules)
+	generar_matricules(1000) # 1000 matrícules (cotxes)
+	generar_matricules_png(str_matricules)
 
 	dia_inici = datetime(2023, 1, 1, 0, 0, 0)
 	dia_fi = datetime(2023, 12, 31, 23, 59, 59)
