@@ -1,0 +1,29 @@
+# Temporary files
+*~
+
+# carpetes a ometre
+omit
+__pycache__
+simulaciodades5
+clusteringpytorch
+clusteringsklearn
+clusteringsklearn5
+
+simulaciodades/__pycache__
+simulaciodades/omit
+simulaciodades/versions
+simulaciodades/matricules/*.png
+simulaciodades/data/*.csv
+
+simulacioparking/__pycache__
+simulacioparking/omit
+simulacioparking/versions
+simulacioparking/matricules/*.png
+simulacioparking/data/*.csv
+
+# fitxers ocults
+.coverage
+.coveragerc
+
+# altres
+MILLORAR.txt

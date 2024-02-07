@@ -1,0 +1,15 @@
+[MASTER]
+
+indent-string='\t'
+#indent-after-parent=1
+extension-pkg-whitelist=cv2
+
+disable=
+    C0103, # uppercase naming style
+	C0301, # Line too long
+	R0914, # Too many local variables
+	C0330, # Wrong hanging indentation
+	W0621, # Redefining name 'xxx' from outer scope (redefined-outer-name)
+	R1716, # chained-comparison
+	E1101, #Module 'cv2' has no 'imread' member (no-member)
+  R0913, #too-many-arguments

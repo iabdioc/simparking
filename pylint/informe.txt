@@ -1,0 +1,14 @@
+************* Module simulacio_parking_v5
+/home/joan/IOC/IC03_IA_BD/nous_materials/M3_v6/M3U5/parking/projecte/simulacio_parking/simulacio_parking_v5.py:45:0: E0401: Unable to import 'simulacio_dades.simulacio_dades' (import-error)
+/home/joan/IOC/IC03_IA_BD/nous_materials/M3_v6/M3U5/parking/projecte/simulacio_parking/simulacio_parking_v5.py:45:0: C0413: Import "from simulacio_dades.simulacio_dades import generar_caps_de_setmana, generar_diumenges, generar_feiners, generar_dies_tots, generar_dades_tipus" should be placed at the top of the module (wrong-import-position)
+/home/joan/IOC/IC03_IA_BD/nous_materials/M3_v6/M3U5/parking/projecte/simulacio_parking/simulacio_parking_v5.py:53:1: W0603: Using the global statement (global-statement)
+/home/joan/IOC/IC03_IA_BD/nous_materials/M3_v6/M3U5/parking/projecte/simulacio_parking/simulacio_parking_v5.py:47:19: W0613: Unused argument 'sig' (unused-argument)
+/home/joan/IOC/IC03_IA_BD/nous_materials/M3_v6/M3U5/parking/projecte/simulacio_parking/simulacio_parking_v5.py:47:24: W0613: Unused argument 'frame' (unused-argument)
+/home/joan/IOC/IC03_IA_BD/nous_materials/M3_v6/M3U5/parking/projecte/simulacio_parking/simulacio_parking_v5.py:118:9: W0703: Catching too general exception Exception (broad-except)
+/home/joan/IOC/IC03_IA_BD/nous_materials/M3_v6/M3U5/parking/projecte/simulacio_parking/simulacio_parking_v5.py:134:1: W0603: Using the global statement (global-statement)
+/home/joan/IOC/IC03_IA_BD/nous_materials/M3_v6/M3U5/parking/projecte/simulacio_parking/simulacio_parking_v5.py:147:9: W0703: Catching too general exception Exception (broad-except)
+/home/joan/IOC/IC03_IA_BD/nous_materials/M3_v6/M3U5/parking/projecte/simulacio_parking/simulacio_parking_v5.py:186:1: W0603: Using the global statement (global-statement)
+
+------------------------------------------------------------------
+Your code has been rated at 9.35/10 (previous run: 0.05/10, +9.30)
+
