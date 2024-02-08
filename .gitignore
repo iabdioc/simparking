@@ -21,6 +21,8 @@ simulacioparking/versions
 simulacioparking/matricules/*.png
 simulacioparking/data/*.csv
 
+generarinforme/versions
+
 # fitxers ocults
 .coverage
 .coveragerc

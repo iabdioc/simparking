@@ -19,24 +19,36 @@ Consta també de diferents carpetes i scripts relacionats amb l'anàlisi de les 
 
 # Execució <a name="run"></a>
 
-Per instal·lar les dependències del projecte:
-<pre>
+Pots crear un entorn virtual fent:
+```
+$ virtualenv venv
+```
+
+i tot seguit instal·lar els mòduls necessaris:
+```
 $ pip install -r requirements.txt
-</pre>
-<pre>
+```
+
+Per executar:
+```
 $ cd simulaciodades
 $ python simulaciodades.py
-</pre>
+```
 
-<pre>
+```
 $ cd simulacioparking
 $ python simulacioparking.py [cli | gui]
-</pre>
+```
 Utilitza l'opció <em>gui</em> per la interfície gràfica (llibreria tkinter).
 
 # Docker <a name="docker"></a>
 
 # Testing <a name="tests"></a>
+
+Des de l'arrel del projecte:
+```
+$ python -m unittest discover -s tests
+```
 
 # Llicència <a name="licence"></a>
 Joan Quintana - IOC (2024)
