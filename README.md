@@ -21,7 +21,12 @@ Consta també de diferents carpetes i scripts relacionats amb l'anàlisi de les 
 
 Pots crear un entorn virtual fent:
 ```
+$ python -m venv venv
+ o bé:
+
 $ virtualenv venv
+
+$ source venv/bin/activate
 ```
 
 i tot seguit instal·lar els mòduls necessaris:
@@ -52,6 +57,6 @@ $ python -m unittest discover -s tests
 
 # Llicència <a name="licence"></a>
 Joan Quintana - IOC (2024)
-Llicència MIT. LICENCE.txt per més detalls
+Llicència MIT. [LICENSE.txt](LICENSE.txt) per més detalls
 
 

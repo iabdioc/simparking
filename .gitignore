@@ -18,7 +18,6 @@ simulaciodades/data/*.csv
 simulacioparking/__pycache__
 simulacioparking/omit
 simulacioparking/versions
-simulacioparking/matricules/*.png
 simulacioparking/data/*.csv
 
 generarinforme/versions

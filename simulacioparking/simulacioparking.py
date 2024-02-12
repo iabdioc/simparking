@@ -4,6 +4,7 @@
 
 from utils.customformatter import CustomFormatter
 
+import os
 import sys
 import re
 import itertools
@@ -74,6 +75,12 @@ def ocr(fitxer):
 	gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) #convert to grey scale
 	gray = cv2.bilateralFilter(gray, 11, 17, 17) #Blur to reduce noise
 	edged = cv2.Canny(gray, 30, 200) #Perform Edge detection
+
+	try:
+		os.makedirs(os.path.dirname('img/'))
+	except FileExistsError:
+		pass
+
 	cv2.imwrite("img/edged.png", edged)
 
 	# find contours in the edged image, keep only the largest ones, and initialize our screen contour
@@ -139,16 +146,16 @@ def processar_timer_cli(t, fout): # pragma: no cover
 	str_t = t.strftime("%d-%m-%Y %H:%M:%S")
 	logger.info("timer: %s", str_t)
 	# imprimir tots els cotxes que han d'actuar
-	while arr_cotxes_ordenats[0][2].timestamp() < t.timestamp():
+	while arr_cotxes_ordenats[0][3].timestamp() < t.timestamp():
 		matricula = arr_cotxes_ordenats[0][0]
 		logger.info("%s", matricula)
 		matricula_png = matricula.replace(' ', '-') + '.png'
-		logger.debug(arr_cotxes_ordenats[0][2])
+		logger.debug(arr_cotxes_ordenats[0][3])
 		logger.debug(matricula_png)
 		txt_matricula = ocr('../simulaciodades/matricules/' + matricula_png)
 		logger.info("detectat: %s", txt_matricula)
 		try:
-			fout.write("{};{};{};{}\n".format(txt_matricula, arr_cotxes_ordenats[0][1], arr_cotxes_ordenats[0][2], arr_cotxes_ordenats[0][2].weekday()))
+			fout.write("{};{};{};{}\n".format(txt_matricula, arr_cotxes_ordenats[0][2], arr_cotxes_ordenats[0][3], arr_cotxes_ordenats[0][3].weekday()))
 		except Exception as e:
 			logger.debug('Exception: %s (registre no gravat)', e)
 
@@ -192,7 +199,7 @@ def processar_timer_gui(self, t, fout): # pragma: no cover
 	str_t = t.strftime("%d-%m-%Y %H:%M:%S")
 	logger.info("\ntimer: %s", str_t)
 	# imprimir tots els cotxes que han d'actuar
-	while arr_cotxes_ordenats[0][2].timestamp() < t.timestamp():
+	while arr_cotxes_ordenats[0][3].timestamp() < t.timestamp():
 		matricula = arr_cotxes_ordenats[0][0]
 		logger.info("%s", matricula)
 		matricula_png = matricula.replace(' ', '-') + '.png'
@@ -200,15 +207,15 @@ def processar_timer_gui(self, t, fout): # pragma: no cover
 
 		txt_matricula = ocr('../simulaciodades/matricules/' + matricula_png)
 		logger.info("detectat: %s", txt_matricula)
-		fout.write("{};{};{};{}\n".format(txt_matricula, arr_cotxes_ordenats[0][1], arr_cotxes_ordenats[0][2], arr_cotxes_ordenats[0][2].weekday()))
+		fout.write("{};{};{};{}\n".format(txt_matricula, arr_cotxes_ordenats[0][2], arr_cotxes_ordenats[0][3], arr_cotxes_ordenats[0][3].weekday()))
 
 		# data
-		self.lbl_temps = Label(self.root, text=arr_cotxes_ordenats[0][2].strftime("%d-%m-%Y %H:%M:%S"), background='#ffe4b4', font=("Arial", 35))
+		self.lbl_temps = Label(self.root, text=arr_cotxes_ordenats[0][3].strftime("%d-%m-%Y %H:%M:%S"), background='#ffe4b4', font=("Arial", 35))
 		self.lbl_temps.pack()
 		self.lbl_temps.place(width=450, height=120, x=10, y=120)
 
 		# E/S (entra/surt)
-		str_ES = "Entra" if arr_cotxes_ordenats[0][1] == 'E' else "Surt"
+		str_ES = "Entra" if arr_cotxes_ordenats[0][2] == 'E' else "Surt"
 		self.lbl_ES = Label(self.root, text=f"{str_ES}", background='#ffe4b4', font=("Arial", 35))
 		self.lbl_ES.pack()
 		self.lbl_ES.place(width=150, height=90, x=480, y=250)
@@ -328,35 +335,34 @@ if __name__ == "__main__":
 	dia_fi = dia_inici + timedelta(days=365)
 
 	str_matricules = '../simulaciodades/data/matricules.txt'
-	proporcions = [.1, .1, .1, .7] # proporcions entre I, II, III i IV
 
 	dicc = [
-		{"name":"tipus I", "perc": [20, 50], "mu_t": 21, "s_t": 1, "mu_d": 3, "s_d": 1},
-		{"name":"tipus II", "perc": [20, 50], "mu_t": 11, "s_t": 1, "mu_d": 3, "s_d": 1},
-		{"name":"tipus III", "perc": [20, 50], "mu_t": 9, "s_t": 1, "mu_d": 6, "s_d": 1},
-		{"name":"tipus IV", "perc": [1, 3], "mu_t": 12, "s_t": 8, "mu_d": 2, "s_d": 1}
+		{"name":"tipus I", "proporcio":.1, "perc": [20, 50], "mu_t": 21, "s_t": 1, "mu_d": 3, "s_d": 1},
+		{"name":"tipus II", "proporcio":.1, "perc": [20, 50], "mu_t": 11, "s_t": 1, "mu_d": 3, "s_d": 1},
+		{"name":"tipus III", "proporcio":.1, "perc": [20, 50], "mu_t": 9, "s_t": 1, "mu_d": 6, "s_d": 1},
+		{"name":"tipus IV", "proporcio":.7, "perc": [1, 3], "mu_t": 12, "s_t": 8, "mu_d": 2, "s_d": 1}
 	]
 
 	f = open(str_matricules, 'r')
 	matricules = f.readlines()
 	f.close()
 
+	count = 0
 	cotxes_tipus_I = []
 	cotxes_tipus_II = []
 	cotxes_tipus_III = []
 	cotxes_tipus_IV = []
 
-	count = 0
 
 	# assignació de cotxes a tipologia
 	for mat in matricules:
 		mat = mat.strip()
 
-		if count <= int(proporcions[0]*len(matricules)):
+		if count <= int(dicc[0]['proporcio']*len(matricules)):
 			cotxes_tipus_I.append(mat)
-		elif count <= int((proporcions[0] + proporcions[1])*len(matricules)):
+		elif count <= int((dicc[0]['proporcio'] + dicc[1]['proporcio'])*len(matricules)):
 			cotxes_tipus_II.append(mat)
-		elif count <= int((proporcions[0] + proporcions[1] + proporcions[2])*len(matricules)):
+		elif count <= int((dicc[0]['proporcio'] + dicc[1]['proporcio'] + dicc[2]['proporcio'])*len(matricules)):
 			cotxes_tipus_III.append(mat)
 		else:
 			cotxes_tipus_IV.append(mat)
@@ -373,17 +379,22 @@ if __name__ == "__main__":
 
 	arr_cotxes = []
 	for i in range(len(cotxes_tipus)):
-		arr_cotxes.append(generar_dades_tipus(cotxes_tipus[i], dicc[i], dies[i])[0])
+		arr_cotxes.append(generar_dades_tipus(i+1, cotxes_tipus[i], dicc[i], dies[i])[0])
 
 	# fem el flatten, i ordenem per les dates
 	arr_cotxes = list(itertools.chain.from_iterable(arr_cotxes)) # amb un array de numpy això es fa amb flatten()
-	arr_cotxes_ordenats = sorted(arr_cotxes, key=lambda x: x[2]) # ordenem per dia
+	arr_cotxes_ordenats = sorted(arr_cotxes, key=lambda x: x[3]) # ordenem per dia
 
 	logger.info("Tasca prèvia finalitzada, comença la simulació\n")
 	sleep(2)
 
 	#dia = dia_inici + timedelta(hours=ara.hour) # hora actual
 	dia = dia_inici + timedelta(minutes=15) # hora actual
+
+	try:
+		os.makedirs(os.path.dirname('data/'))
+	except FileExistsError:
+		pass
 
 	foutput = open("data/registre.csv", "a") # mode append per tal de què es vagin acumulant tots els valors
 	if mode == 'cli':
