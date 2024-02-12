@@ -69,7 +69,7 @@ def generacio_dades(c, dicc_, dies_):
 	logger.debug(dicc_)
 	arr_cotxes = []
 	for cot in enumerate(c):
-		arr_cotxes.append(generar_dades_tipus(cot[1], dicc_[cot[0]], dies_[cot[0]])[1])
+		arr_cotxes.append(generar_dades_tipus(cot[0]+1, cot[1], dicc_[cot[0]], dies_[cot[0]])[1])
 
 	# fem el flatten, i ordenem per les dates
 	arr_cotxes = list(itertools.chain.from_iterable(arr_cotxes)) # amb un array de numpy això es fa amb flatten()
@@ -126,8 +126,8 @@ def tractament_dades(lst_parking_data):
 	"""
 	logger.debug(lst_parking_data[20])
 
-	parking_data = pd.DataFrame(lst_parking_data, columns=['matricula', 'durada', 'hora', 'dia_setmana_dec'])
-
+	parking_data = pd.DataFrame(lst_parking_data, columns=['matricula', 'tipus', 'durada', 'hora', 'dia_setmana_dec'])
+	parking_data = parking_data.drop('tipus', axis=1)
 	parking_data_gb = parking_data.groupby(['matricula']).mean()
 	parking_data_gb = parking_data_gb.merge(parking_data.groupby(['matricula']).count()['durada'], how='inner', on='matricula')
 	parking_data_gb = parking_data_gb.rename(columns={'durada_x': 'durada', 'durada_y': 'count'})

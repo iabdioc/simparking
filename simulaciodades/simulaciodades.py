@@ -5,6 +5,7 @@
 from utils.customformatter import CustomFormatter
 
 from datetime import datetime, timedelta
+import os
 import random
 import string
 import logging
@@ -16,7 +17,7 @@ from PIL import Image, ImageDraw, ImageFont, ImageFilter
 logger = logging.getLogger("simulaciodades")
 logger.setLevel(logging.DEBUG)
 ch = logging.StreamHandler()
-ch.setLevel(logging.WARNING) # canviar a DEBUG mentre es programa
+ch.setLevel(logging.INFO) # canviar a DEBUG mentre es programa
 ch.setFormatter(CustomFormatter())
 logger.addHandler(ch)
 
@@ -31,6 +32,12 @@ def generar_matricules(num=1000, str_fitxer='data/matricules.txt'):
 	Returns:
 		None
 	"""
+
+	try:
+		os.makedirs(os.path.dirname(str_fitxer))
+	except FileExistsError:
+		pass
+
 	fout = open(str_fitxer, "w")
 
 	for _ in range(num):
@@ -60,6 +67,12 @@ def generar_matricules_png(fitxer_matricules, bool_imgfons=True, directori='matr
 	Returns: None
 	"""
 	logger.info('Generant els png de les matrícules...')
+
+	try:
+		os.makedirs(os.path.dirname(directori))
+	except FileExistsError:
+		pass
+
 	if bool_imgfons:
 		frontal = Image.open(directori + "frontal/frontal.png")
 
@@ -109,8 +122,6 @@ def generar_matricules_png(fitxer_matricules, bool_imgfons=True, directori='matr
 		# img.show()
 		img.save(directori + matricula.replace(' ', '-') + ".png")
 	f.close()
-
-
 
 def generar_caps_de_setmana(dia_i, dia_f):
 	"""
@@ -195,12 +206,13 @@ def generar_dies_tots(dia_i, dia_f):
 		dia = dia + timedelta(days=1)
 	return lst_dies
 
-def generar_dades_tipus(arr_cotxes, dicc_, dies_, fout=None, fout_d=None):
+def generar_dades_tipus(tipus, arr_cotxes, dicc_, dies_, fout=None, fout_d=None):
 	"""
 	Simulació: Genera un array de dates entre dia_inici i dia_fi per a cadascun dels cotxes de l'array,
 	i els escriu als dos fitxers
 
 	arguments:
+    tipus -- tipus (1=I, 2=II, 3=III, 4=IV)
 		arr_cotxes -- arr de matrícules de cotxes
 		dicc_ -- el diccionari amb les especificacions de com s'ha d'omplir la simulació
 		dies_ -- llista de dies que seran assignats
@@ -266,12 +278,12 @@ def generar_dades_tipus(arr_cotxes, dicc_, dies_, fout=None, fout_d=None):
 			hora = round(dies_pkg_entrada[i].hour + dies_pkg_entrada[i].minute/60 + dies_pkg_entrada[i].second/3600, 1)
 			dia_setmana_dec = round(dia_setmana + hora/24, 1)
 			if fout and fout_d:
-				fout.write("{};E;{};{}\n".format(cotxe, dies_pkg_entrada[i], dies_pkg_entrada[i].weekday()))
-				fout.write("{};S;{};{}\n".format(cotxe, dies_pkg_sortida[i], dies_pkg_entrada[i].weekday()))
-				fout_d.write("{};{};{};{};{};{}\n".format(cotxe, dies_pkg_entrada[i], durada, hora, dia_setmana, dia_setmana_dec))
-			arr_reg_ES.append([cotxe, 'E', dies_pkg_entrada[i], dies_pkg_entrada[i].weekday()])
-			arr_reg_ES.append([cotxe, 'S', dies_pkg_sortida[i], dies_pkg_entrada[i].weekday()])
-			arr_reg_durada.append([cotxe, durada, hora, dia_setmana_dec])
+				fout.write("{};{};E;{};{}\n".format(cotxe, tipus, dies_pkg_entrada[i], dies_pkg_entrada[i].weekday()))
+				fout.write("{};{};S;{};{}\n".format(cotxe, tipus, dies_pkg_sortida[i], dies_pkg_entrada[i].weekday()))
+				fout_d.write("{};{};{};{};{};{};{}\n".format(cotxe, tipus, dies_pkg_entrada[i], durada, hora, dia_setmana, dia_setmana_dec))
+			arr_reg_ES.append([cotxe, tipus, 'E', dies_pkg_entrada[i], dies_pkg_entrada[i].weekday()])
+			arr_reg_ES.append([cotxe, tipus, 'S', dies_pkg_sortida[i], dies_pkg_entrada[i].weekday()])
+			arr_reg_durada.append([cotxe, tipus, durada, hora, dia_setmana_dec])
 	return arr_reg_ES, arr_reg_durada
 
 # ----------------------------------------------
@@ -282,8 +294,14 @@ if __name__ == "__main__":
 	np.random.seed(10)
 
 	str_matricules = 'data/matricules.txt'
-	#generar_matricules(1000) # 1000 matrícules (cotxes)
-	#generar_matricules_png(str_matricules)
+
+	try:
+		os.makedirs(os.path.dirname(str_matricules))
+	except FileExistsError:
+		pass
+
+	generar_matricules(1000) # 1000 matrícules (cotxes)
+	generar_matricules_png(str_matricules)
 
 	dia_inici = datetime(2023, 1, 1, 0, 0, 0)
 	dia_fi = datetime(2023, 12, 31, 23, 59, 59)
@@ -331,12 +349,12 @@ if __name__ == "__main__":
 	foutput = open("data/registre.csv", "w")
 	foutput_d = open("data/registre_durada.csv", "w")
 
-	foutput.write("matricula;ES;dia_hora;dia_setmana\n")
-	foutput_d.write("matricula;dia_hora;durada;hora;dia_setmana;dia_setmana_dec\n")
+	foutput.write("matricula;tipus;ES;dia_hora;dia_setmana\n")
+	foutput_d.write("matricula;tipus;dia_hora;durada;hora;dia_setmana;dia_setmana_dec\n")
 
 	arr_cotxes = []
 	for i in range(len(cotxes_tipus)):
-		arr_cotxes.append(generar_dades_tipus(cotxes_tipus[i], dicc[i], dies[i], foutput, foutput_d))
+		arr_cotxes.append(generar_dades_tipus(i+1, cotxes_tipus[i], dicc[i], dies[i], foutput, foutput_d))
 
 	foutput.close()
 	foutput_d.close()
