@@ -121,7 +121,7 @@ def ocr(fitxer):
 		try:
 			txt_matricula = pytesseract.image_to_string(cropped, config='--psm 3') # --psm 11
 			txt_matricula = txt_matricula.replace('\n', '').replace(' ', '').strip()
-			txt_matricula = re.sub('[^A-Za-z0-9]+', '', txt_matricula) # eliminar caràcgers especials
+			txt_matricula = re.sub('[^A-Za-z0-9]+', '', txt_matricula) # eliminar caràcters especials
 			txt_matricula = re.sub(r'(\d{4})', r'\1 ', txt_matricula) # posem un espai en blanc entre el grup de números i el grup de lletres
 		except Exception as e:
 			logger.debug('Exception: %s', e)

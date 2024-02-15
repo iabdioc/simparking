@@ -23,7 +23,6 @@ Pots crear un entorn virtual fent:
 ```
 $ python -m venv venv
  o bé:
-
 $ virtualenv venv
 
 $ source venv/bin/activate

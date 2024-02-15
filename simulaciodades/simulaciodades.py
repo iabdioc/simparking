@@ -105,7 +105,7 @@ def generar_matricules_png(fitxer_matricules, bool_imgfons=True, directori='matr
 
 		# Load font and draw text
 		draw = ImageDraw.Draw(mat)
-		fnt = ImageFont.truetype('/usr/share/fonts/truetype/freefont/FreeMonoBold.ttf', 42)
+		fnt = ImageFont.truetype('fonts/DejaVuSansMono-Bold.ttf', 42)
 		draw.text((62, 5), matricula, font=fnt, fill=(0, 0, 0))
 
 		#angle = random.randint(-10, 10)
@@ -212,7 +212,7 @@ def generar_dades_tipus(tipus, arr_cotxes, dicc_, dies_, fout=None, fout_d=None)
 	i els escriu als dos fitxers
 
 	arguments:
-    tipus -- tipus (1=I, 2=II, 3=III, 4=IV)
+		tipus -- tipus (1=I, 2=II, 3=III, 4=IV)
 		arr_cotxes -- arr de matrícules de cotxes
 		dicc_ -- el diccionari amb les especificacions de com s'ha d'omplir la simulació
 		dies_ -- llista de dies que seran assignats
