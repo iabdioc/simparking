@@ -365,7 +365,7 @@ if __name__ == "__main__":
 	#Assignació dels nous valors als tipus
 	for i, p in enumerate(pred):
 		t = [t for t in tipus if t['label'] == p]
-    logging.info('%s: %s', dades_cotxe_gb.index[i], t[0]['name'])
+		logging.info('%s: %s', dades_cotxe_gb.index[i], t[0]['name'])
 
 	# Generació d'informes
 	generar_informes(parking_data_gb, tipus)
