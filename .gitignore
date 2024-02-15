@@ -19,7 +19,6 @@ simulacioparking/data/*.csv
 
 clusteringsklearn/__pycache__
 clusteringsklearn5
-clusteringpytorch
 
 generarinforme/versions
 
