@@ -47,6 +47,23 @@ Utilitza l'opció <em>gui</em> per la interfície gràfica (llibreria tkinter).
 
 # Docker <a name="docker"></a>
 
+```
+Descarrega:
+$ docker pull iabdioc/simparking:latest
+
+Crea i arrenca el contenidor:
+$ docker run --name simparking -dit -p 8888:8888 iabdioc/simparking:latest /bin/sh
+
+Accedir al contenidor
+$ docker exec -it simparking /bin/bash
+
+Dins del contenidor pots arrencar el servidor web de Jupyter:
+$ arrencar_jupyter.sh
+
+Pots testejar un quadern de Jupyter a:
+simparking/clusteringsklearn/jupyter/clusteringsklearn.ipynb
+```
+
 # Testing <a name="tests"></a>
 
 Des de l'arrel del projecte:
