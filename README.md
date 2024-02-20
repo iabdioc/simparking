@@ -8,6 +8,9 @@
 # simparking <a name="simparking"></a>
 **simparking** és un projecte de simulació d'entrades i sortides de cotxes en un pàrquing de la ciutat.
 
+ENG: This is a Python project that simulates a parking car activity. 4 behaviour patterns have been coded.
+The ultimate goal is to train a KMeans clustering algorythm to discover the four patterns.
+
 Es vol crear dades sintètiques per poder fer un anàlisi de les dades amb IA (bàsicament un problema de clustering).
 
 Consta de dues parts:
