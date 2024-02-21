@@ -72,6 +72,7 @@ simparking/clusteringsklearn/jupyter/clusteringsklearn.ipynb
 
 El model del clustering està dins la carpeta api/model. Es pot predir el tipus a què pertany un cotxe si proporcionem dades d'entrada al pàrquing del cotxe.
 
+Per arrencar l'API tenim l'script bootstrap.sh a l'arrel del projecte. 
 ```
 $ curl -X POST -H "Content-Type: application/json" -d '{
   "matricula": "6897 JWK",
