@@ -2,6 +2,7 @@
 1. [simparking](#simparking)
 2. [Execució](#run)
 3. [Docker](#docker)
+3. [API](#api)
 3. [Testing](#tests)
 4. [Llicència](#licence)
 
@@ -65,6 +66,23 @@ $ arrencar_jupyter.sh
 
 Pots testejar un quadern de Jupyter a:
 simparking/clusteringsklearn/jupyter/clusteringsklearn.ipynb
+```
+
+# API <a name="api"></a>
+
+El model del clustering està dins la carpeta api/model. Es pot predir el tipus a què pertany un cotxe si proporcionem dades d'entrada al pàrquing del cotxe.
+
+```
+$ curl -X POST -H "Content-Type: application/json" -d '{
+  "matricula": "6897 JWK",
+  "registres": "3600,7.5,0.31;2000,21.0,2.88;4000,12.4,4.52;2500,11.3,6.47;800,15.0,2.63"
+}' http://localhost:5000/prediccio
+```
+També tenim els endpoints:
+```
+$ curl --request GET 'http://127.0.0.1:5000/scores' --header 'Content-Type: application/json'
+
+$ curl --request GET 'http://127.0.0.1:5000/centers' --header 'Content-Type: application/json'
 ```
 
 # Testing <a name="tests"></a>

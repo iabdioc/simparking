@@ -2,6 +2,8 @@
 @ IOC - Joan Quintana - 2024 - CE IABD
 '''
 from flask import Flask, jsonify, request
+from flask_cors import CORS, cross_origin
+
 from . import clustering_model, scores, scaler, tipus_dict
 
 import numpy
@@ -64,6 +66,12 @@ def normalitzacio(df, sc):
 
 app = Flask(__name__)
 
+@app.after_request
+def handle_options(response):
+	response.headers["Access-Control-Allow-Origin"] = "*"
+	response.headers["Access-Control-Allow-Headers"] = "Content-Type, X-Requested-With"
+	return response
+
 @app.route('/scores')
 def get_model_scores():
 	return json.dumps(scores)
@@ -77,24 +85,9 @@ def get_model_centers():
 @app.route('/prediccio', methods=['POST'])
 def fer_prediccio():
 	data = request.get_json()
+
 	matricula = data["matricula"]
 	registres = data["registres"]
-	lst = registres.split(";")
-
-	for i, ele in enumerate(lst):
-		lst[i] = ele.split(",")
-
-	registres = [list( map(float,i) ) for i in lst]
-	registres = [[matricula] + x for x in registres]
-
-	prediccio = nova_prediccio(registres, scaler, clustering_model)[1]
-	#print(prediccio)
-	return tipus_dict[prediccio[0]]['name']
-
-@app.route('/prediccio_get', methods=['GET'])
-def fer_prediccio_get():
-	matricula = request.args.get("matricula")
-	registres = request.args.get("registres")
 
 	lst = registres.split(";")
 
@@ -103,7 +96,5 @@ def fer_prediccio_get():
 
 	registres = [list( map(float,i) ) for i in lst]
 	registres = [[matricula] + x for x in registres]
-
 	prediccio = nova_prediccio(registres, scaler, clustering_model)[1]
-	#print(prediccio)
-	return "El cotxe {} és de {}".format(matricula, tipus_dict[prediccio[0]]['name'])
+	return {"matricula": matricula, "tipus":tipus_dict[prediccio[0]]['name']}
