@@ -100,6 +100,7 @@ Dins les carpetes <em>clusteringsklearn</em> i <em>clusteringpytorch</em> es res
 S'obtenen 4 clústers.
 
 !(https://raw.githubusercontent.com/iabdioc/simparking/main/grafica3.png)
+!(grafica3.png?raw=true "Clusters")
 
 # Testing <a name="tests"></a>
 
