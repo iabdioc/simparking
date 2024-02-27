@@ -2,9 +2,10 @@
 1. [simparking](#simparking)
 2. [Execució](#run)
 3. [Docker](#docker)
-3. [API](#api)
-3. [Testing](#tests)
-4. [Llicència](#licence)
+4. [API](#api)
+5. [Clustering](#clustering)
+6. [Testing](#tests)
+7. [Llicència](#licence)
 
 # simparking <a name="simparking"></a>
 **simparking** és un projecte de simulació d'entrades i sortides de cotxes en un pàrquing de la ciutat.
@@ -56,7 +57,10 @@ Descarrega:
 $ docker pull iabdioc/simparking:latest
 
 Crea i arrenca el contenidor:
-$ docker run --name simparking -dit -p 8888:8888 iabdioc/simparking:latest /bin/sh
+$ docker run --name simparking -dit -p 8888:8888 -p 5000:5000 iabdioc/simparking:latest /bin/sh
+
+  * port 8000: Jupyter
+  * port 5000: REST API
 
 Accedir al contenidor
 $ docker exec -it simparking /bin/bash
@@ -87,6 +91,15 @@ $ curl --request GET 'http://127.0.0.1:5000/scores/h' --header 'Content-Type: ap
 
 $ curl --request GET 'http://127.0.0.1:5000/centers' --header 'Content-Type: application/json'
 ```
+A la carpeta <em>api/clients/</em> hi ha clients .html i .py per testejar l'API.
+
+# Clustering <a name="clustering"></a>
+
+Dins les carpetes <em>clusteringsklearn</em> i <em>clusteringpytorch</em> es resol el problema de trobar els clústers per a les dades simulades.ç
+
+S'obtenen 4 clústers.
+
+!(clusteringsklearn/img/grafica3.png "clusters")
 
 # Testing <a name="tests"></a>
 
