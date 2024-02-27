@@ -99,7 +99,7 @@ Dins les carpetes <em>clusteringsklearn</em> i <em>clusteringpytorch</em> es res
 
 S'obtenen 4 clústers.
 
-!(clusteringsklearn/img/grafica3.png "clusters")
+!(./grafica3.png "clusters")
 
 # Testing <a name="tests"></a>
 
