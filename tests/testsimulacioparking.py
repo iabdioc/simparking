@@ -1,8 +1,14 @@
+'''
+@ IOC - Joan Quintana - 2024 - CE IABD
+'''
 import unittest
 
 from simulacioparking.simulacioparking import ocr
 
 class TestOCR(unittest.TestCase):
+	"""
+	classe TestOCR
+	"""
 	def test_ocr(self):
 		"""
 		Test del reconeixement d'una placa de matrícula

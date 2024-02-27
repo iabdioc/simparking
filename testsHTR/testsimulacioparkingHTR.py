@@ -1,11 +1,17 @@
-import HtmlTestRunner
+'''
+@ IOC - Joan Quintana - 2024 - CE IABD
+'''
 import unittest
 import sys
+import HtmlTestRunner
 
 sys.path.append("..")
 from simulacioparking.simulacioparking import ocr
 
 class TestOCR(unittest.TestCase):
+	"""
+	Classe TestOCR
+	"""
 	def test_ocr(self):
 		"""
 		Test del reconeixement d'una placa de matrícula

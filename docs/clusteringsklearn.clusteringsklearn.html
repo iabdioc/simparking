@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module clusteringsklearn</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>clusteringsklearn</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/joan/IOC/IC03_IA_BD/nous_materials/M3_v6/M3U5/projecte/simparking/clusteringsklearn/clusteringsklearn.py">/home/joan/IOC/IC03_IA_BD/nous_materials/M3_v6/M3U5/projecte/simparking/clusteringsklearn/clusteringsklearn.py</a></font></td></tr></table>
+    <p><tt>@&nbsp;IOC&nbsp;-&nbsp;Joan&nbsp;Quintana&nbsp;-&nbsp;2024&nbsp;-&nbsp;CE&nbsp;IABD</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="logging.html">logging</a><br>
+<a href="os.html">os</a><br>
+</td><td width="25%" valign=top><a href="pandas.html">pandas</a><br>
+<a href="pickle.html">pickle</a><br>
+</td><td width="25%" valign=top><a href="matplotlib.pyplot.html">matplotlib.pyplot</a><br>
+<a href="sklearn.preprocessing.html">sklearn.preprocessing</a><br>
+</td><td width="25%" valign=top><a href="seaborn.html">seaborn</a><br>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-EDA"><strong>EDA</strong></a>(df)</dt><dd><tt>Exploratory&nbsp;Data&nbsp;Analysis&nbsp;del&nbsp;dataframe<br>
+&nbsp;<br>
+arguments:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;df&nbsp;--&nbsp;dataframe<br>
+&nbsp;<br>
+Returns:&nbsp;None</tt></dd></dl>
+ <dl><dt><a name="-associar_clusters_patrons"><strong>associar_clusters_patrons</strong></a>(tipus, model)</dt><dd><tt>Associa&nbsp;els&nbsp;clústers&nbsp;(labels&nbsp;0,&nbsp;1,&nbsp;2,&nbsp;3)&nbsp;als&nbsp;patrons&nbsp;de&nbsp;comportament&nbsp;(I,&nbsp;II,&nbsp;III,&nbsp;IV).<br>
+S'han&nbsp;trobat&nbsp;4&nbsp;clústers&nbsp;però&nbsp;aquesta&nbsp;associació&nbsp;encara&nbsp;no&nbsp;s'ha&nbsp;fet.<br>
+&nbsp;<br>
+arguments:<br>
+tip&nbsp;--&nbsp;un&nbsp;array&nbsp;de&nbsp;tipus&nbsp;de&nbsp;patrons&nbsp;que&nbsp;volem&nbsp;actualitzar&nbsp;associant&nbsp;els&nbsp;labels<br>
+model&nbsp;--&nbsp;model&nbsp;KMeans&nbsp;entrenat<br>
+&nbsp;<br>
+Returns:&nbsp;array&nbsp;de&nbsp;diccionaris&nbsp;amb&nbsp;l'assignació&nbsp;dels&nbsp;tipus&nbsp;als&nbsp;labels</tt></dd></dl>
+ <dl><dt><a name="-clean"><strong>clean</strong></a>(df)</dt><dd><tt>Elimina&nbsp;les&nbsp;columnes&nbsp;que&nbsp;no&nbsp;són&nbsp;necessàries<br>
+&nbsp;<br>
+arguments:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;df&nbsp;--&nbsp;dataframe<br>
+&nbsp;<br>
+Returns:&nbsp;dataframe</tt></dd></dl>
+ <dl><dt><a name="-clustering_kmeans"><strong>clustering_kmeans</strong></a>(data)</dt><dd><tt>Crea&nbsp;el&nbsp;model&nbsp;KMeans&nbsp;de&nbsp;sk-learn,&nbsp;amb&nbsp;4&nbsp;clusters&nbsp;(estem&nbsp;cercant&nbsp;4&nbsp;agrupacions)<br>
+Entrena&nbsp;el&nbsp;model<br>
+&nbsp;<br>
+arguments:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data&nbsp;--&nbsp;el&nbsp;dataframe&nbsp;amb&nbsp;les&nbsp;dades&nbsp;seleccionades&nbsp;(en&nbsp;principi&nbsp;totes&nbsp;perquè&nbsp;hem&nbsp;eliminat&nbsp;les&nbsp;que&nbsp;no&nbsp;interessen)<br>
+&nbsp;<br>
+Returns:&nbsp;model&nbsp;(objecte&nbsp;KMeans)</tt></dd></dl>
+ <dl><dt><a name="-extract_true_labels"><strong>extract_true_labels</strong></a>(df)</dt><dd><tt>Fem&nbsp;un&nbsp;agrupament&nbsp;de&nbsp;les&nbsp;matrícules&nbsp;i&nbsp;ens&nbsp;guardem&nbsp;els&nbsp;seus&nbsp;labels&nbsp;vertaders<br>
+&nbsp;<br>
+arguments:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;df&nbsp;--&nbsp;dataframe<br>
+&nbsp;<br>
+Returns:&nbsp;numpy&nbsp;ndarray&nbsp;(true&nbsp;labels)</tt></dd></dl>
+ <dl><dt><a name="-generar_informes"><strong>generar_informes</strong></a>(df, tipus)</dt><dd><tt>Generació&nbsp;dels&nbsp;informes&nbsp;a&nbsp;la&nbsp;carpeta&nbsp;informes/.&nbsp;Tenim&nbsp;un&nbsp;dataset&nbsp;de&nbsp;cotxes&nbsp;i&nbsp;4&nbsp;clústers,&nbsp;i&nbsp;generem<br>
+4&nbsp;fitxers&nbsp;de&nbsp;matrícules&nbsp;per&nbsp;cadascun&nbsp;dels&nbsp;clústers<br>
+&nbsp;<br>
+arguments:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;df&nbsp;--&nbsp;dataframe<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tipus&nbsp;--&nbsp;objecte&nbsp;que&nbsp;associa&nbsp;els&nbsp;patrons&nbsp;de&nbsp;comportament&nbsp;amb&nbsp;els&nbsp;labels&nbsp;dels&nbsp;clústers<br>
+&nbsp;<br>
+Returns:&nbsp;None</tt></dd></dl>
+ <dl><dt><a name="-group_by"><strong>group_by</strong></a>(df)</dt><dd><tt>Agrupament&nbsp;del&nbsp;dataframe&nbsp;per&nbsp;matrícula,&nbsp;i&nbsp;les&nbsp;dades&nbsp;agrupades&nbsp;calculat&nbsp;la&nbsp;mitjana.<br>
+Afegeix&nbsp;la&nbsp;columna&nbsp;count<br>
+&nbsp;<br>
+arguments:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;df&nbsp;--&nbsp;dataframe<br>
+&nbsp;<br>
+Returns:&nbsp;dataframe</tt></dd></dl>
+ <dl><dt><a name="-load_dataset"><strong>load_dataset</strong></a>(path)</dt><dd><tt>Carrega&nbsp;el&nbsp;dataset&nbsp;de&nbsp;registres&nbsp;del&nbsp;parking<br>
+&nbsp;<br>
+arguments:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;path&nbsp;--&nbsp;dataset<br>
+&nbsp;<br>
+Returns:&nbsp;dataframe</tt></dd></dl>
+ <dl><dt><a name="-normalitzacio"><strong>normalitzacio</strong></a>(df, sc)</dt><dd><tt>Normalitza&nbsp;les&nbsp;dades.&nbsp;Colummnes&nbsp;com&nbsp;la&nbsp;'durada'&nbsp;són&nbsp;de&nbsp;l'ordre&nbsp;de&nbsp;desenes&nbsp;de&nbsp;milers&nbsp;(segons)<br>
+&nbsp;<br>
+arguments:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;df&nbsp;--&nbsp;dataframe<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sc&nbsp;--&nbsp;Scaler&nbsp;entrenat&nbsp;sobre&nbsp;el&nbsp;dataframe<br>
+&nbsp;<br>
+Returns:&nbsp;dataframe&nbsp;normalitzat</tt></dd></dl>
+ <dl><dt><a name="-nova_prediccio"><strong>nova_prediccio</strong></a>(dades, sc, model)</dt><dd><tt>Passem&nbsp;nous&nbsp;valors&nbsp;de&nbsp;registre&nbsp;en&nbsp;el&nbsp;parking,&nbsp;per&nbsp;tal&nbsp;d'assignar&nbsp;aquests&nbsp;valors&nbsp;a&nbsp;un&nbsp;dels&nbsp;4&nbsp;clústers<br>
+&nbsp;<br>
+arguments:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dades&nbsp;--&nbsp;array&nbsp;de&nbsp;Python&nbsp;(llista),&nbsp;que&nbsp;segueix&nbsp;l'estructura&nbsp;'matricula',&nbsp;'durada',&nbsp;'hora',&nbsp;'dia_setmana_dec'<br>
+&nbsp;<br>
+Returns:&nbsp;(dades&nbsp;agrupades,&nbsp;prediccions&nbsp;del&nbsp;model)</tt></dd></dl>
+ <dl><dt><a name="-suppress_stdout_stderr"><strong>suppress_stdout_stderr</strong></a>()</dt><dd><tt>A&nbsp;context&nbsp;manager&nbsp;that&nbsp;redirects&nbsp;stdout&nbsp;and&nbsp;stderr&nbsp;to&nbsp;devnull</tt></dd></dl>
+ <dl><dt><a name="-visualitzar_clusters"><strong>visualitzar_clusters</strong></a>(data, labels)</dt><dd><tt>Visualitza&nbsp;els&nbsp;clusters&nbsp;en&nbsp;diferents&nbsp;colors.&nbsp;Probem&nbsp;diferents&nbsp;combinacions&nbsp;de&nbsp;parells&nbsp;d'atributs<br>
+&nbsp;<br>
+arguments:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data&nbsp;--&nbsp;el&nbsp;dataset&nbsp;sobre&nbsp;el&nbsp;qual&nbsp;hem&nbsp;entrenat<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;labels&nbsp;--&nbsp;l'array&nbsp;d'etiquetes&nbsp;a&nbsp;què&nbsp;pertanyen&nbsp;les&nbsp;dades&nbsp;(hem&nbsp;assignat&nbsp;les&nbsp;dades&nbsp;a&nbsp;un&nbsp;dels&nbsp;4&nbsp;clústers)<br>
+&nbsp;<br>
+Returns:&nbsp;None</tt></dd></dl>
+ <dl><dt><a name="-visualitzar_pairplot"><strong>visualitzar_pairplot</strong></a>(df)</dt><dd><tt>Genera&nbsp;una&nbsp;imatge&nbsp;combinant&nbsp;entre&nbsp;sí&nbsp;tots&nbsp;els&nbsp;parells&nbsp;d'atributs.<br>
+Serveix&nbsp;per&nbsp;apreciar&nbsp;si&nbsp;es&nbsp;podran&nbsp;trobar&nbsp;clústers.<br>
+&nbsp;<br>
+arguments:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;df&nbsp;--&nbsp;dataframe<br>
+&nbsp;<br>
+Returns:&nbsp;None</tt></dd></dl>
+</td></tr></table>
+</body></html>

@@ -83,6 +83,8 @@ També tenim els endpoints:
 ```
 $ curl --request GET 'http://127.0.0.1:5000/scores' --header 'Content-Type: application/json'
 
+$ curl --request GET 'http://127.0.0.1:5000/scores/h' --header 'Content-Type: application/text'
+
 $ curl --request GET 'http://127.0.0.1:5000/centers' --header 'Content-Type: application/json'
 ```
 

@@ -4,6 +4,8 @@ indent-string='\t'
 #indent-after-parent=1
 extension-pkg-whitelist=cv2
 
+init-hook='sys.path.append("..")'
+
 disable=
     C0103, # uppercase naming style
 	C0301, # Line too long

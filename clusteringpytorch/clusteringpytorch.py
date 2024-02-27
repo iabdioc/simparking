@@ -10,7 +10,6 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import torch
-import numpy as np
 
 from sklearn import preprocessing
 from sklearn.metrics.cluster import homogeneity_score, completeness_score, v_measure_score
@@ -149,12 +148,12 @@ def clustering_kmeans(data, dev):
 	logging.debug('\nTensor:\n%s\n...', tensor[:3])
 
 	cluster_ids_x, cluster_centers = kmeans(
-		X=tensor, num_clusters=4, distance='euclidean', device=device
+		X=tensor, num_clusters=4, distance='euclidean', device=dev
 	)
 
 	return cluster_ids_x, cluster_centers
 
-def visualitzar_clusters(data, labels, centers):
+def visualitzar_clusters(data, centers):
 	"""
 	Visualitza els clusters en diferents colors. Probem diferents combinacions de parells d'atributs
 
@@ -230,7 +229,6 @@ def associar_clusters_patrons(tipus, centers):
 
 	for j, center in enumerate(centers):
 		v_hora = round(center[dicc['hora']].item(), 1)
-		v_durada = round(center[dicc['durada']].item(), 1)
 		v_count = round(center[dicc['count']].item(), 1)
 
 		if (v_hora) > val_hora_max:
@@ -242,8 +240,6 @@ def associar_clusters_patrons(tipus, centers):
 		if (v_count) < val_count_min:
 			ind_label_3 = j
 			val_count_min = v_count
-		#if (v_hora < 0 and v_durada > 0 and v_count < 0):
-		# ind_label_1 = j
 
 	lst = [0, 1, 2, 3]
 	lst.remove(ind_label_0)
@@ -329,7 +325,7 @@ if __name__ == "__main__":
 	EDA(parking_data)
 
 	parking_data = clean(parking_data)
-	
+
 	true_labels = extract_true_labels(parking_data)
 
 	parking_data = parking_data.drop('tipus', axis=1) # eliminem el tipus, ja no interessa
@@ -357,7 +353,7 @@ if __name__ == "__main__":
 	logging.info('Completeness: %.3f', completeness_score(true_labels, cluster_ids_x))
 	logging.info('V-measure: %.3f', v_measure_score(true_labels, cluster_ids_x))
 
-	visualitzar_clusters(selected_data, cluster_ids_x, cluster_centers)
+	visualitzar_clusters(selected_data, cluster_centers)
 
 	# array de diccionaris que assignarà els tipus als labels
 	tipus = [{'name': 'tipus I'}, {'name': 'tipus II'}, {'name': 'tipus III'}, {'name': 'tipus IV'}]

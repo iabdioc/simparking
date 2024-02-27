@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Formulari predicció</title>
+<head>
+<style>
+body {background-color: #bbbbbb; font-size: 30px}
+input, textarea, button {font-size: 30px}
+p   {color: blue;}
+input { width: 150px; }
+label {
+	width: 200px;
+	display: inline-block;
+}
+textarea{ vertical-align: middle;}
+pre {font-size: 15px}
+.resultat {font-size: 60px}
+</style>
+<script>
+	function setup() {
+		document.getElementById("boto").addEventListener("click", processar);
+	}
+
+	function processar() {
+		console.log("processar")
+		matricula = document.getElementById("matricula").value;
+		registres = document.getElementById("registres").value;
+		console.log(matricula);
+		console.log(registres);  
+
+		//API endpoint
+		const apiUrl = 'http://localhost:5000/prediccio';
+
+		// Form data to be sent in the request body
+		const formData = {
+			matricula: matricula,
+			registres: document.getElementById("registres").value
+		};
+
+		// Make a POST request using the Fetch API
+		fetch(apiUrl, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(formData),
+		})
+		.then(response => {
+			if (!response.ok) {
+				throw new Error('Network response was not ok');
+			}
+			return response.json();
+		})
+		.then(newData => {
+			console.log('New Data:', newData);
+			document.getElementById("resultat").innerHTML = `${newData.matricula}: ${newData.tipus}`;
+		})
+		.catch(error => {
+			console.error('Error:', error);
+		}); 
+	}
+
+</script>
+
+</head>
+<body onload="setup()">
+	<h1>Predicció: </h1>
+	<form>
+		<div><label>Matricula:</label><input type="text" id="matricula"></input></div>
+		<div><label>Registres:</label><textarea name="textarea" rows="5" cols="50" id="registres"></textarea></div>
+	</form>
+	<label></label><button id="boto" >Predicció</button>
+	<div id="resultat" class="resultat"></div>
+	<pre>
+		Ex Tipus I: 7197, 21.5, 6.90;4941, 21.1, 5.88;13461, 20.1, 6.84;13818, 19.4, 5.81;11251, 19.9, 6.83
+		Ex Tipus II: 12195, 12.2, 6.51;11881, 11.2, 6.47;12885, 11.5, 6.48;10549, 11.1, 6.46;2359, 11.6, 6.48
+		Ex Tipus III: 18264, 7.5, 0.31;22436, 7.7, 1.32;19223, 8.2, 2.34;20256, 9.0, 3.38;21345, 7.6, 4.32;18264, 7.5, 0.31;22436, 7.7, 1.32;19223, 8.2, 2.34;20256, 9.0, 3.38;21345, 7.6, 4.32
+		Ex Tipus IV: 3600, 7.5, 0.31;2000, 21.0, 2.88;4000, 12.4, 4.52;2500, 11.3, 6.47;800, 15.0, 2.63
+	</pre>
+</body>
+</html>

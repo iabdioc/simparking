@@ -2,8 +2,6 @@
 @ IOC - Joan Quintana - 2024 - CE IABD
 '''
 
-from utils.customformatter import CustomFormatter
-
 import os
 import sys
 import re
@@ -13,16 +11,17 @@ from threading import Timer
 from threading import Thread # GUI
 import signal
 import logging
-
+from time import sleep
 from tkinter import Tk, Label, Button # GUI
+
+from utils.customformatter import CustomFormatter
+
 from PIL import Image
 from PIL import ImageTk # GUI
 import cv2
 import imutils
 import numpy as np
 import pytesseract
-
-from time import sleep
 
 # els directoris simulacioparking i simulaciodades estan al mateix nivell.
 # Així és com ho fem per importar un paquet que està al mateix nivell
@@ -256,7 +255,7 @@ def processar_timer_gui(self, t, fout): # pragma: no cover
 		sleep(2)
 		self.lbl_bar.config(text="")
 
-class GUI(): 
+class GUI():
 	"""
 	Classe GUI (Interfície Gràfica d'Usuari), que executa funcions a temps regulars, però sense bloquejar l'execució.
 	"""
@@ -274,7 +273,7 @@ class GUI():
 		"""
 		self.root = Tk()
 		self.root.geometry("700x800")
-		self.root.configure(background='#ffe4b4') 
+		self.root.configure(background='#ffe4b4')
 		self.root.title("Projecte Parking")
 
 		self.img_titol = ImageTk.PhotoImage(Image.open('img/titol.png'))
@@ -368,7 +367,7 @@ if __name__ == "__main__":
 			cotxes_tipus_IV.append(mat)
 
 		count += 1
-	
+
 	cotxes_tipus = [cotxes_tipus_I, cotxes_tipus_II, cotxes_tipus_III, cotxes_tipus_IV]
 
 	dies = []

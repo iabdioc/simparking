@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Cluster Centers</title>
+<head>
+<style>
+body {background-color: #bbbbbb; font-size: 30px}
+p    {color: blue;}
+</style>
+<script>
+function requestListener() {
+  var data = this.response;
+  console.log(data);
+  document.getElementById("resposta").innerHTML = data;
+  str = "<p><em>durada, hora, dia_setmana_dec, count" + "</em><br />";
+  arr = ['I', 'II', 'III', 'IV']
+  for (let i=0; i < data.length; i++) {
+    str += '';
+    str += '<strong>Tipus ' + arr[i] + "</strong>: "
+    for (let j=0; j < data.length; j++) {
+      str += String(parseFloat(data[i][j]).toFixed(2)) + '&nbsp;';
+    }
+    str += '<br />';
+  }
+  str += '</p>';
+  document.getElementById("resposta_detall").innerHTML = str;
+}
+
+function requestError(error) {
+  console.log('We have an issue', error);
+}
+
+let request = new XMLHttpRequest();
+request.responseType = 'json';
+request.onload = requestListener;
+request.onerror = requestError;
+request.open('get', 'http://localhost:5000/centers', true);
+request.send();
+</script>
+
+</head>
+<body>
+<h1>Cluster Centers</h1>
+<div id="resposta"></div>
+<div id="resposta_detall"></div>
+</body>
+</html>

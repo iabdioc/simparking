@@ -5,11 +5,11 @@
 import os
 import logging
 from contextlib import contextmanager, redirect_stderr, redirect_stdout
+import pickle
 
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
-import pickle
 
 from sklearn import preprocessing
 from sklearn.cluster import KMeans
@@ -216,7 +216,6 @@ def associar_clusters_patrons(tipus, model):
 	for j, center in enumerate(clustering_model.cluster_centers_):
 
 		v_hora = round(center[dicc['hora']], 1)
-		v_durada = round(center[dicc['durada']], 1)
 		v_count = round(center[dicc['count']], 1)
 
 		if (v_hora) > val_hora_max:
@@ -228,8 +227,6 @@ def associar_clusters_patrons(tipus, model):
 		if (v_count) < val_count_min:
 			ind_label_3 = j
 			val_count_min = v_count
-		#if (v_hora < 0 and v_durada > 0 and v_count < 0):
-		#	ind_label_1 = j
 
 	lst = [0, 1, 2, 3]
 	lst.remove(ind_label_0)
@@ -309,7 +306,7 @@ if __name__ == "__main__":
 	EDA(parking_data)
 
 	parking_data = clean(parking_data)
-	
+
 	true_labels = extract_true_labels(parking_data)
 
 	parking_data = parking_data.drop('tipus', axis=1) # eliminem el tipus, ja no interessa
@@ -317,7 +314,7 @@ if __name__ == "__main__":
 
 	scaler = preprocessing.StandardScaler().fit(parking_data_gb)
 	# guardem el model de la normalització
-	with open('model/scaler.pkl','wb') as f:
+	with open('model/scaler.pkl', 'wb') as f:
 		pickle.dump(scaler, f)
 	parking_data_gb_norm = normalitzacio(parking_data_gb, scaler)
 
@@ -330,14 +327,14 @@ if __name__ == "__main__":
 
 	clustering_model = clustering_kmeans(selected_data)
 	# guardem el model
-	with open('model/clustering_model.pkl','wb') as f:
+	with open('model/clustering_model.pkl', 'wb') as f:
 		pickle.dump(clustering_model, f)
 	data_labels = clustering_model.labels_
 
 	logging.info('\nHomogeneity: %.3f', homogeneity_score(true_labels, data_labels))
 	logging.info('Completeness: %.3f', completeness_score(true_labels, data_labels))
 	logging.info('V-measure: %.3f', v_measure_score(true_labels, data_labels))
-	with open('model/scores.pkl','wb') as f:
+	with open('model/scores.pkl', 'wb') as f:
 		pickle.dump({
 		"h": homogeneity_score(true_labels, data_labels),
 		"c": completeness_score(true_labels, data_labels),
@@ -355,7 +352,7 @@ if __name__ == "__main__":
 
 	tipus = associar_clusters_patrons(tipus, clustering_model)
 	# guardem la variable tipus
-	with open('model/tipus_dict.pkl','wb') as f:
+	with open('model/tipus_dict.pkl', 'wb') as f:
 		pickle.dump(tipus, f)
 	logging.info('\nTipus i labels:\n%s', tipus)
 

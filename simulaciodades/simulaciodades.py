@@ -1,16 +1,15 @@
 '''
 @ IOC - Joan Quintana - 2024 - CE IABD
 '''
-
-from utils.customformatter import CustomFormatter
-
 from datetime import datetime, timedelta
 import os
 import random
 import string
 import logging
-import numpy as np
 
+from utils.customformatter import CustomFormatter
+
+import numpy as np
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
 #logger = logging.getlogger(__name__)
@@ -322,7 +321,7 @@ if __name__ == "__main__":
 	cotxes_tipus_II = []
 	cotxes_tipus_III = []
 	cotxes_tipus_IV = []
-	
+
 	# assignació de cotxes a tipologia
 	for mat in matricules:
 		mat = mat.strip()
@@ -337,7 +336,7 @@ if __name__ == "__main__":
 			cotxes_tipus_IV.append(mat)
 
 		count += 1
-	
+
 	cotxes_tipus = [cotxes_tipus_I, cotxes_tipus_II, cotxes_tipus_III, cotxes_tipus_IV]
 
 	dies = []

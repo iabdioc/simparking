@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Cluster Centers</title>
+<head>
+<style>
+body {background-color: #bbbbbb; font-size: 30px}
+p    {color: blue;}
+</style>
+<script>
+// Specify the API endpoint for user data
+const apiUrl = 'http://localhost:5000/scores';
+
+// Make a GET request using the Fetch API
+fetch(apiUrl)
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then(userData => {
+    console.log('User Data:', userData);
+    const txtjson = JSON.stringify(userData)
+    const obj = JSON.parse(txtjson);
+    document.getElementById('h').innerHTML = `Homogeneïtat: ${parseFloat(obj.h).toFixed(3)}`;
+    document.getElementById('c').innerHTML = `Completesa: ${parseFloat(obj.c).toFixed(3)}`;
+    document.getElementById('v').innerHTML = `V-measure: ${parseFloat(obj.v).toFixed(3)}`;
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+</script>
+
+</head>
+<body>
+<h1>Scores</h1>
+<div id="h"></div>
+<div id="c"></div>
+<div id="v"></div>
+</body>
+</html>

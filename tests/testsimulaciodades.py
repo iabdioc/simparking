@@ -1,11 +1,16 @@
+'''
+@ IOC - Joan Quintana - 2024 - CE IABD
+'''
 import unittest
 import os
+from datetime import datetime
 
-from simulaciodades.simulaciodades import *
-
-from datetime import datetime, timedelta
+from simulaciodades.simulaciodades import generar_caps_de_setmana, generar_feiners, generar_matricules, generar_matricules_png
 
 class TestGenerarDies(unittest.TestCase):
+	"""
+	classe TestGenerarDies
+	"""
 	def test_generar_caps_de_setmana(self):
 		"""
 		Test la longitud de l'array de dies dissabte/diumenge entre 15/01/2024 i 31/12/2024
@@ -25,8 +30,13 @@ class TestGenerarDies(unittest.TestCase):
 		self.assertEqual(len(arr), 5)
 
 class TestGenerarMatricules(unittest.TestCase):
-
+	"""
+	classe TestGenerarMatricules
+	"""
 	def test_generar_fitxer_matricules(self):
+		"""
+		Test generar 10 matrícules
+		"""
 		fitxer = 'tests/data/matricules.txt'
 		generar_matricules(10, fitxer)
 		f = open(fitxer, 'r')
@@ -35,6 +45,9 @@ class TestGenerarMatricules(unittest.TestCase):
 		f.close()
 
 	def test_generar_matricules_png(self):
+		"""
+		Test generar 10 matrícules png
+		"""
 		# primer eliminar el contingut
 		os.system('rm tests/matricules/*')
 
@@ -42,9 +55,9 @@ class TestGenerarMatricules(unittest.TestCase):
 		generar_matricules_png(fitxer, False, 'tests/matricules/') # sense imatge de fons
 
 		count = 0
-		for root_dir, cur_dir, files in os.walk(r'tests/matricules'):
+		for _, _, files in os.walk(r'tests/matricules'):
 			count += len(files)
 		self.assertEqual(count, 10)
-		
+
 if __name__ == '__main__':
 	unittest.main()
