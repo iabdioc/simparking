@@ -95,7 +95,7 @@ A la carpeta <em>api/clients/</em> hi ha clients .html i .py per testejar l'API.
 
 # Clustering <a name="clustering"></a>
 
-Dins les carpetes <em>clusteringsklearn</em> i <em>clusteringpytorch</em> es resol el problema de trobar els clústers per a les dades simulades.ç
+Dins les carpetes <em>clusteringsklearn</em> i <em>clusteringpytorch</em> es resol el problema de trobar els clústers per a les dades simulades.
 
 S'obtenen 4 clústers.
 
