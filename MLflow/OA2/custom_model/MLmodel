@@ -1,0 +1,26 @@
+flavors:
+  python_function:
+    artifacts:
+      clustering_model:
+        path: artifacts/clustering_model.pkl
+        uri: model/clustering_model.pkl
+      dades:
+        path: artifacts/registre_durada.csv
+        uri: ./data/registre_durada.csv
+      dades_norm:
+        path: artifacts/registre_durada_norm.csv
+        uri: ./data/registre_durada_norm.csv
+      scaler:
+        path: artifacts/scaler.pkl
+        uri: model/scaler.pkl
+    cloudpickle_version: 3.0.0
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.pyfunc.model
+    python_model: python_model.pkl
+    python_version: 3.8.10
+mlflow_version: 2.9.2
+model_size_bytes: 989940
+model_uuid: de739794792143cb9b5421705fdeb0d1
+utc_time_created: '2024-03-05 17:17:35.728200'

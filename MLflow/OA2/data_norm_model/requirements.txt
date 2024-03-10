@@ -1,0 +1,10 @@
+mlflow==2.9.2
+cloudpickle==3.0.0
+distribute==0.7.3
+importlib-metadata==6.0.0
+numpy==1.23.5
+packaging==23.2
+pathlib==1.0.1
+scikit-learn==1.2.1
+scipy==1.10.1
+typing==3.7.4.3

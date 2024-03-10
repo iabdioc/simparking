@@ -246,7 +246,8 @@ def nova_prediccio(dades, sc, model):
 
 	arguments:
 		dades -- array de Python (llista), que segueix l'estructura 'matricula', 'durada', 'hora', 'dia_setmana_dec'
-
+		sc -- scaler model
+		model -- clustering model
 	Returns: (dades agrupades, prediccions del model)
 	"""
 	df_dades_cotxe = pd.DataFrame(columns=['matricula', 'durada', 'hora', 'dia_setmana_dec'], data=dades)
