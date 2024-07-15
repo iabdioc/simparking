@@ -36,7 +36,7 @@ if __name__ == "__main__":
 		experiment_ids=[exp.experiment_id],
 	)
 
-	#esborrem tots els runs de l'experiment
+	# esborrem tots els runs de l'experiment
 	for run in runs:
 		mlflow.delete_run(run.info.run_id)
 		remove_run_dir(get_run_dir(run.info.artifact_uri))

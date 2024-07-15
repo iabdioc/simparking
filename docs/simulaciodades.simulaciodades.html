@@ -19,13 +19,14 @@
 <tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
 <td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="PIL.Image.html">PIL.Image</a><br>
 <a href="PIL.ImageDraw.html">PIL.ImageDraw</a><br>
-</td><td width="25%" valign=top><a href="PIL.ImageFilter.html">PIL.ImageFilter</a><br>
-<a href="PIL.ImageFont.html">PIL.ImageFont</a><br>
-</td><td width="25%" valign=top><a href="logging.html">logging</a><br>
+<a href="PIL.ImageFilter.html">PIL.ImageFilter</a><br>
+</td><td width="25%" valign=top><a href="PIL.ImageFont.html">PIL.ImageFont</a><br>
+<a href="logging.html">logging</a><br>
 <a href="numpy.html">numpy</a><br>
-</td><td width="25%" valign=top><a href="random.html">random</a><br>
+</td><td width="25%" valign=top><a href="os.html">os</a><br>
+<a href="random.html">random</a><br>
 <a href="string.html">string</a><br>
-</td></tr></table></td></tr></table><p>
+</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#eeaa77">
 <td colspan=3 valign=bottom>&nbsp;<br>
@@ -45,7 +46,7 @@ array</tt></dd></dl>
 i&nbsp;els&nbsp;escriu&nbsp;als&nbsp;dos&nbsp;fitxers<br>
 &nbsp;<br>
 arguments:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tipus&nbsp;--&nbsp;1,&nbsp;2,&nbsp;3&nbsp;o&nbsp;4&nbsp;(corresponent&nbsp;als&nbsp;tipus&nbsp;de&nbsp;comportament&nbsp;I,&nbsp;II,&nbsp;III,&nbsp;IV)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tipus&nbsp;--&nbsp;tipus&nbsp;(1=I,&nbsp;2=II,&nbsp;3=III,&nbsp;4=IV)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;arr_cotxes&nbsp;--&nbsp;arr&nbsp;de&nbsp;matrícules&nbsp;de&nbsp;cotxes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dicc_&nbsp;--&nbsp;el&nbsp;diccionari&nbsp;amb&nbsp;les&nbsp;especificacions&nbsp;de&nbsp;com&nbsp;s'ha&nbsp;d'omplir&nbsp;la&nbsp;simulació<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dies_&nbsp;--&nbsp;llista&nbsp;de&nbsp;dies&nbsp;que&nbsp;seran&nbsp;assignats<br>
@@ -53,7 +54,7 @@ arguments:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;foutput_d&nbsp;--&nbsp;fitxer&nbsp;d'escriptura&nbsp;del&nbsp;registre&nbsp;d'entrades,&nbsp;amb&nbsp;la&nbsp;durada&nbsp;de&nbsp;l'estacionament&nbsp;al&nbsp;parking<br>
 &nbsp;<br>
 Returns:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;arr&nbsp;--&nbsp;array&nbsp;amb&nbsp;els&nbsp;registres&nbsp;dels&nbsp;cotxes<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tuple&nbsp;--&nbsp;tuple&nbsp;of&nbsp;arrays.&nbsp;Tupla&nbsp;amb&nbsp;els&nbsp;registres&nbsp;dels&nbsp;cotxes&nbsp;(format&nbsp;E/S,&nbsp;i&nbsp;format&nbsp;durada)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Com&nbsp;a&nbsp;resultat&nbsp;hem&nbsp;escrit&nbsp;en&nbsp;els&nbsp;fitxers&nbsp;data/registre.csv&nbsp;i&nbsp;data/registre_durada.csv</tt></dd></dl>
  <dl><dt><a name="-generar_dies_tots"><strong>generar_dies_tots</strong></a>(dia_i, dia_f)</dt><dd><tt>Genera&nbsp;un&nbsp;array&nbsp;de&nbsp;dates&nbsp;entre&nbsp;dia_inici&nbsp;i&nbsp;dia_fi,<br>
 corresponent&nbsp;a&nbsp;tots&nbsp;els&nbsp;dies<br>

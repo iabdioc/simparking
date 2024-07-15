@@ -8,7 +8,8 @@
 7. [Llicència](#licence)
 
 # simparking <a name="simparking"></a>
-**simparking** és un projecte de simulació d'entrades i sortides de cotxes en un pàrquing de la ciutat.
+**simparking** és un projecte de simulació d'entrades i sortides de cotxes en un pàrquing de la ciutat. S'ha definit 4 patrons de cotxes.
+L'objectiu és descobrir els 4 patrons amb l'algoritme de clustering KMeans.
 
 ENG: This is a Python project that simulates a parking car activity. 4 behaviour patterns have been coded.
 The ultimate goal is to train a KMeans clustering algorythm to discover the four patterns.

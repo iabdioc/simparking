@@ -1,6 +1,10 @@
 imutils==0.5.4
 numpy==1.24.4
 opencv-python==4.9.0.80
+opencv-contrib-python
 packaging==23.2
 pillow==10.2.0
 pytesseract==0.3.10
+pandas
+seaborn
+scikit-learn

@@ -155,7 +155,7 @@ def clustering_kmeans(data, dev):
 
 def visualitzar_clusters(data, centers):
 	"""
-	Visualitza els clusters en diferents colors. Probem diferents combinacions de parells d'atributs
+	Visualitza els clusters en diferents colors. Provem diferents combinacions de parells d'atributs
 
 	arguments:
 		data -- el dataset sobre el qual hem entrenat
