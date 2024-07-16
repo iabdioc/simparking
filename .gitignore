@@ -28,12 +28,12 @@ MLflow/OA1/sklearnmlflow5.py
 MLflow/OA1/mlflowtracking-K5.py
 MLflow/OA1/searchexp-K5.py
 MLflow/OA1/mlruns
-MLflow/OA1/data/*.csv
+MLflow/OA1/data/registre_durada5.csv
+MLflow/OA1/data/registre_durada_norm5.csv
 
 MLflow/OA2/temp_model
 MLflow/OA2/__pycache__
 MLflow/OA2/mlruns
-MLflow/OA2/data/*.csv
 MLflow/OA2/activitat.py
 MLflow/OA2/hubble.py
 
